@@ -8,7 +8,7 @@ public enum Freezer {
     Freezer(String freezer){
         this.freezer = freezer;
     }
-    public String getChama(){
+    public String getFreezer(){
         return this.freezer;
     }
 }

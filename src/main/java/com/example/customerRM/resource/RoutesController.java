@@ -1,47 +1,47 @@
 package com.example.customerRM.resource;
 
-import com.example.customerRM.enumeration.CustomerStatus;
-import com.example.customerRM.model.Customer;
 import com.example.customerRM.model.Response;
-import com.example.customerRM.service.implementation.CustomerServiceImpl;
+import com.example.customerRM.model.Routes;
+import com.example.customerRM.service.implementation.RouteServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import static java.time.LocalDateTime.now;
+import static java.util.Map.*;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
 
 @RestController
-@RequestMapping("/api/customer")
+@RequestMapping("/api/routes")
 @RequiredArgsConstructor
-public class CustomerController {
-    private final CustomerServiceImpl customerService;
+public class RoutesController {
+    private final RouteServiceImpl routeService;
 
     @GetMapping("/list")
-    public ResponseEntity<Response> getCustomers(){
+    public ResponseEntity<Response> getRoutes(){
         return ResponseEntity.ok(
                 Response.builder()
                         .timeStamp(now())
-                        .data(Map.of("customers", customerService.list(30)))
-                        .message("Customers Retrieved")
+                        .data(of("routes", routeService.list(30)))
+                        .message("Routes Retrieved")
                         .status(OK)
                         .statusCode(OK.value())
                         .build()
         );
     }
 
-    @PostMapping("/save")
-    public ResponseEntity<Response> saveCustomer(@RequestBody @Valid Customer customer){
+
+    @GetMapping("/save")
+    public ResponseEntity<Response> saveRoutes(@RequestBody @Valid Routes routes){
         return ResponseEntity.ok(
                 Response.builder()
                         .timeStamp(now())
-                        .data(Map.of("customers", customerService.create(customer)))
-                        .message("Customer Created")
+                        .data(of("routes", routeService.create(routes)))
+                        .message("Route Created")
                         .status(CREATED)
                         .statusCode(CREATED.value())
                         .build()
@@ -49,12 +49,12 @@ public class CustomerController {
     }
 
     @GetMapping("/get/{id}")
-    public ResponseEntity<Response> getCustomer(@PathVariable("id") Long id){
+    public ResponseEntity<Response> getRoutes(@PathVariable("id") Long id){
         return ResponseEntity.ok(
                 Response.builder()
                         .timeStamp(now())
-                        .data(Map.of("customers", customerService.get(id) ))
-                        .message("Customer Retrieved")
+                        .data(of("routes", routeService.get(id) ))
+                        .message("Route Retrieved")
                         .status(OK)
                         .statusCode(OK.value())
                         .build()
@@ -62,23 +62,15 @@ public class CustomerController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Response> deleteCustomer(@PathVariable("id") Long id){
+    public ResponseEntity<Response> deleteRoutes(@PathVariable("id") Long id){
         return ResponseEntity.ok(
                 Response.builder()
                         .timeStamp(now())
-                        .data(Map.of("deleted", customerService.delete(id) ))
-                        .message("Customer Deleted")
+                        .data(of("deleted", routeService.delete(id) ))
+                        .message("Route Deleted")
                         .status(OK)
                         .statusCode(OK.value())
                         .build()
         );
-    }
-
-    @GetMapping("/count")
-    public ResponseEntity<Map<String, Integer>> countByStatus(@RequestParam CustomerStatus status){
-        Map<String, Integer> result = new HashMap<>();
-        int customerCount = customerService.countByStatus(status);
-        result.put("count", customerCount);
-        return ResponseEntity.ok().body(result);
     }
 }

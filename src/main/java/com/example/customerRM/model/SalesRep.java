@@ -23,4 +23,7 @@ public class SalesRep {
     @Column(name = "phone_number", unique = true)
     @NotEmpty(message = "Phone number cannot be empty or null")
     private String phoneNumber;
+    @Column(name = "password", unique = true)
+    @NotEmpty(message = "Password must be unique")
+    private String password;
 }

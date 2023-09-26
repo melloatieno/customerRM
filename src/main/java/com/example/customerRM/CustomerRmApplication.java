@@ -1,9 +1,8 @@
 package com.example.customerRM;
 
-import com.example.customerRM.enumeration.*;
-import com.example.customerRM.model.Customer;
-import com.example.customerRM.model.SalesRep;
+import com.example.customerRM.model.Routes;
 import com.example.customerRM.repo.CustomerRepo;
+import com.example.customerRM.repo.RouteRepo;
 import com.example.customerRM.repo.SalesRepRepo;
 import org.springframework.web.filter.CorsFilter;
 import org.springframework.boot.CommandLineRunner;
@@ -12,17 +11,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.cors.CorsConfigurationSource;
 
 import java.util.Arrays;
 
-import static com.example.customerRM.enumeration.Category.*;
-import static com.example.customerRM.enumeration.Challenges.*;
-import static com.example.customerRM.enumeration.Chama.*;
-import static com.example.customerRM.enumeration.CustomerStatus.*;
-import static com.example.customerRM.enumeration.Freezer.YES;
-import static com.example.customerRM.enumeration.Freezer.NO;
-import static com.example.customerRM.enumeration.Gender.*;
 
 @SpringBootApplication
 public class CustomerRmApplication {
@@ -32,8 +23,9 @@ public class CustomerRmApplication {
 	}
 
 	@Bean
-	 CommandLineRunner run (CustomerRepo customerRepo, SalesRepRepo salesRepRepo){
+	 CommandLineRunner run (CustomerRepo customerRepo, SalesRepRepo salesRepRepo, RouteRepo routeRepo){
 		return args-> {
+//			routeRepo.save(new Routes(null, "Route1", "Westlands", "Ruaka", "Kennedy"));
 //			customerRepo.save(new Customer(null, "Kens butchery", "Sam", "0773682738", Male, 43.657, 34.6475, Chama.NO, Storage, SmallEnterprise, "Local Suppliers", "Chicken, Fish", 75, YES, PROSPECT));
 //			salesRepRepo.save(new SalesRep(null, "Kennedy", Male, "0732903678"));
 //			salesRepRepo.save(new SalesRep(null, "Adrian", Male, "0776983202"));
@@ -55,11 +47,5 @@ public class CustomerRmApplication {
 		urlBasedCorsConfigurationSource.registerCorsConfiguration("/**", corsConfiguration);
 		return new CorsFilter(urlBasedCorsConfigurationSource);
 	}
-//	@Bean
-//	CommandLineRunner run (SalesRepRepo salesRepRepo){
-//		return args -> {
-//			salesRepRepo.save(new SalesRep(null, "Faith", Female, "0720394789"));
-//			salesRepRepo.save(new SalesRep(null, "Laureen", Female, "0746804337"));
-//		};
-//	}
+
 }

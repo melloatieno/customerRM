@@ -6,7 +6,9 @@ import com.example.customerRM.service.SalesRepService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -18,9 +20,13 @@ import java.util.List;
 @Slf4j
 public class SalesRepImpl implements SalesRepService {
     private final SalesRepRepo salesRepRepo;
+    @Autowired
+    private final PasswordEncoder passwordEncoder;
     @Override
     public SalesRep create(SalesRep salesRep) {
         String phoneNumber = salesRep.getPhoneNumber();
+        String encodedPassword = this.passwordEncoder.encode(salesRep.getPassword());
+        salesRep.setPassword(encodedPassword);
         SalesRep existingSalesRep = salesRepRepo.findByPhoneNumber(phoneNumber);
         if (existingSalesRep != null) {
             throw new IllegalArgumentException("Phone number must be unique");

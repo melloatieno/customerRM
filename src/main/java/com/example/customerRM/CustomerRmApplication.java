@@ -1,9 +1,10 @@
 package com.example.customerRM;
 
-import com.example.customerRM.model.Routes;
 import com.example.customerRM.repo.CustomerRepo;
 import com.example.customerRM.repo.RouteRepo;
 import com.example.customerRM.repo.SalesRepRepo;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.web.filter.CorsFilter;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -11,11 +12,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Arrays;
 
-
-@SpringBootApplication
+@Configuration
+@SpringBootApplication (exclude = SecurityAutoConfiguration.class)
 public class CustomerRmApplication {
 
 	public static void main(String[] args) {
@@ -27,9 +30,14 @@ public class CustomerRmApplication {
 		return args-> {
 //			routeRepo.save(new Routes(null, "Route1", "Westlands", "Ruaka", "Kennedy"));
 //			customerRepo.save(new Customer(null, "Kens butchery", "Sam", "0773682738", Male, 43.657, 34.6475, Chama.NO, Storage, SmallEnterprise, "Local Suppliers", "Chicken, Fish", 75, YES, PROSPECT));
-//			salesRepRepo.save(new SalesRep(null, "Kennedy", Male, "0732903678"));
+//			salesRepRepo.save(new SalesRep(null, "Irene", Female, "0727328037", "irene.123"));
 //			salesRepRepo.save(new SalesRep(null, "Adrian", Male, "0776983202"));
 		};
+	}
+
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
 	}
 
 	@Bean

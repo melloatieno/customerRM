@@ -35,7 +35,7 @@ public class RoutesController {
     }
 
 
-    @GetMapping("/save")
+    @PostMapping("/save")
     public ResponseEntity<Response> saveRoutes(@RequestBody @Valid Routes routes){
         return ResponseEntity.ok(
                 Response.builder()

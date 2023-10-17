@@ -1,5 +1,7 @@
 package com.example.customerRM.service;
 
+import com.example.customerRM.Dto.LoginDTO;
+import com.example.customerRM.model.LoginResponse;
 import com.example.customerRM.model.SalesRep;
 
 import java.util.Collection;
@@ -13,4 +15,5 @@ public interface SalesRepService {
     SalesRep update(SalesRep salesRep);
     Boolean delete(long id);
 
+    LoginResponse loginSalesRep(LoginDTO loginDTO);
 }

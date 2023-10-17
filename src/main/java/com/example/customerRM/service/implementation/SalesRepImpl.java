@@ -1,5 +1,7 @@
 package com.example.customerRM.service.implementation;
 
+import com.example.customerRM.Dto.LoginDTO;
+import com.example.customerRM.model.LoginResponse;
 import com.example.customerRM.model.SalesRep;
 import com.example.customerRM.repo.SalesRepRepo;
 import com.example.customerRM.service.SalesRepService;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -74,4 +77,25 @@ public class SalesRepImpl implements SalesRepService {
         salesRepRepo.deleteById(id);
         return Boolean.TRUE;
     }
+
+    @Override
+    public LoginResponse loginSalesRep(LoginDTO loginDTO) {
+        String phoneNumber = loginDTO.getPhoneNumber();
+        String password = loginDTO.getPassword();
+
+        SalesRep salesRep = salesRepRepo.findByPhoneNumber(phoneNumber);
+
+        if (salesRep != null) {
+            String encodedPassword = salesRep.getPassword();
+
+            if (passwordEncoder.matches(password, encodedPassword)) {
+                return new LoginResponse("Login Success", true);
+            } else {
+                return new LoginResponse("Login Failed - Incorrect Password", false);
+            }
+        } else {
+            return new LoginResponse("Login Failed - Phone Number not Found", false);
+        }
+    }
+
 }

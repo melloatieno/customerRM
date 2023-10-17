@@ -15,14 +15,18 @@ public class SalesRep {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(name = "name")
     private String name;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "gender")
     private Gender gender;
+
     @Column(name = "phone_number", unique = true)
     @NotEmpty(message = "Phone number cannot be empty or null")
     private String phoneNumber;
+
     @Column(name = "password", unique = true)
     @NotEmpty(message = "Password must be unique")
     private String password;
